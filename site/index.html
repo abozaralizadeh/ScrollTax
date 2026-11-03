@@ -3,81 +3,309 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ScrollTax</title>
-<meta name="description" content="An iPhone app that blocks your social media and lets you pay for short windows of time. Early, open project.">
-<style>
-  :root{--bg:#fbfbfa;--fg:#1b1b1f;--muted:#5d5d66;--card:#fff;--line:#e3e3e0;--accent:#2f5bd8;--code:#f1f1ee}
-  @media (prefers-color-scheme:dark){:root{--bg:#111214;--fg:#ececee;--muted:#a0a0a8;--card:#1a1b1e;--line:#2c2d31;--accent:#8ab4ff;--code:#202125}}
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.6 -apple-system,system-ui,"Segoe UI",sans-serif}
-  main{max-width:46rem;margin:0 auto;padding:3rem 16px 4rem}
-  h1{font-size:2.4rem;line-height:1.15;margin:0 0 .4rem}
-  h2{font-size:1.4rem;margin:2.6rem 0 .6rem}
-  p{margin:.6rem 0}
-  a{color:var(--accent)}
-  .lead{font-size:1.2rem;color:var(--muted)}
-  .note{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.8rem 1rem;color:var(--muted);font-size:.95rem}
-  .shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:1rem}
-  .shots figure{margin:0}
-  .shots img{width:100%;height:auto;border-radius:14px;border:1px solid var(--line);display:block}
-  .shots figcaption{font-size:.85rem;color:var(--muted);margin-top:.35rem}
-  pre{background:var(--code);border-radius:10px;padding:.8rem 1rem;overflow-x:auto;font-size:.9rem;line-height:1.5}
-  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-  ul{padding-left:1.2rem}
-  footer{margin-top:3rem;color:var(--muted);font-size:.9rem}
-</style>
+<title>ScrollTax: make scrolling cost something</title>
+<meta name="description" content="ScrollTax blocks your social apps on iPhone. When you really want in, you pay a small toll for 15 minutes, then the block comes back by itself. Early, source available build.">
+<meta name="theme-color" content="#15140f">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="ScrollTax: make scrolling cost something">
+<meta property="og:description" content="An iPhone app that blocks your social apps. Pay a small toll for 15 minutes, then the block comes back by itself.">
+<meta property="og:url" content="https://abozaralizadeh.github.io/ScrollTax/">
+<meta property="og:image" content="https://abozaralizadeh.github.io/ScrollTax/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ScrollTax: make scrolling cost something. A phone showing the unlock countdown behind a striped toll barrier.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ScrollTax: make scrolling cost something">
+<meta name="twitter:description" content="An iPhone app that blocks your social apps. Pay a small toll for 15 minutes, then the block comes back by itself.">
+<meta name="twitter:image" content="https://abozaralizadeh.github.io/ScrollTax/og.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:wght@400..600&display=swap">
+<link rel="stylesheet" href="style.css">
+<script>
+  // Pick the saved theme before paint so there's no flash. Storage can be blocked, so guard it.
+  (function () {
+    document.documentElement.classList.add('js');
+    try {
+      var t = localStorage.getItem('scrolltax-theme');
+      if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
 </head>
 <body>
-<main>
-  <h1>ScrollTax</h1>
-  <p class="lead">An iPhone app for people who want less social media. You sign up, your social media gets blocked, and opening it costs a small amount for a short window of time.</p>
-  <p class="note">Early project, working name. Not released, takes no real money, and the real blocking hasn't run on a real iPhone yet. The screenshots below are from the simulator in demo mode.</p>
+<a class="skip" href="#main">Skip to the content</a>
 
-  <h2>How it works</h2>
-  <ul>
-    <li>You join by choice. You can leave for free, after a short wait.</li>
-    <li>The phone does the blocking with Apple's Screen Time tools, so it works even when the server is down.</li>
-    <li>One payment opens everything you blocked for a set time, 15 minutes by default. Then the block comes back by itself.</li>
-    <li>A daily limit on unlocks keeps it from turning into a way to spend more and more.</li>
-    <li>The price, the time, the daily limit and the leave wait are all settings.</li>
-    <li>A small backend keeps accounts and payment records. It holds nothing about which apps you block or how you use them.</li>
-  </ul>
-
-  <h2>What it looks like</h2>
-  <div class="shots">
-    <figure><img src="img/1-welcome.png" alt="The welcome screen, showing the deal" loading="lazy"><figcaption>The deal, up front</figcaption></figure>
-    <figure><img src="img/5-blocked.png" alt="The home screen while blocked" loading="lazy"><figcaption>Blocked</figcaption></figure>
-    <figure><img src="img/6-confirm.png" alt="The screen that shows the price before paying" loading="lazy"><figcaption>Price before paying</figcaption></figure>
-    <figure><img src="img/7-unlocked.png" alt="The home screen while unlocked, with a countdown" loading="lazy"><figcaption>Unlocked, with a countdown</figcaption></figure>
-    <figure><img src="img/9-settings.png" alt="The settings screen with leave, data copy and delete" loading="lazy"><figcaption>Leave, copy your data, delete</figcaption></figure>
+<header class="nav" id="top">
+  <div class="wrap nav-row">
+    <a class="brand" href="#top" aria-label="ScrollTax, back to the top">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="6" width="5" height="22" rx="1.5" fill="currentColor"/><g class="brand-arm"><rect x="6" y="11" width="24" height="6" rx="1.5" fill="var(--accent)"/><path d="M11 11h4l-3 6H8zM19 11h4l-3 6h-4zM27 11h3v1.5L27.8 17h-3.8z" fill="var(--ink-on-accent)"/></g></svg>
+      <span>ScrollTax</span>
+    </a>
+    <nav aria-label="Sections">
+      <a href="#how">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#install">Install</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" id="theme" type="button" aria-label="Switch between light and dark">
+        <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+        <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+      </button>
+      <a class="btn btn-small" href="https://github.com/abozaralizadeh/ScrollTax">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 1.5a10.5 10.5 0 0 0-3.3 20.5c.5.1.7-.2.7-.5v-1.8c-2.9.6-3.5-1.4-3.5-1.4-.5-1.2-1.2-1.5-1.2-1.5-1-.7 0-.7 0-.7 1 .1 1.6 1.1 1.6 1.1.9 1.6 2.5 1.2 3.1.9.1-.7.4-1.2.7-1.4-2.3-.3-4.8-1.2-4.8-5.2 0-1.1.4-2.1 1.1-2.8-.1-.3-.5-1.3.1-2.8 0 0 .9-.3 2.9 1.1a10 10 0 0 1 5.2 0c2-1.4 2.9-1.1 2.9-1.1.6 1.5.2 2.5.1 2.8.7.7 1.1 1.7 1.1 2.8 0 4-2.5 4.9-4.8 5.2.4.3.7 1 .7 1.9v2.8c0 .3.2.6.7.5A10.5 10.5 0 0 0 12 1.5z"/></svg>
+        <span>GitHub</span>
+      </a>
+    </div>
   </div>
+</header>
 
-  <h2>Quick install</h2>
-  <p>You need Node 24 or newer. For the iPhone app you also need Xcode and XcodeGen.</p>
-  <p>Backend:</p>
-<pre><code>cd backend
+<main id="main">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">For iPhone · Early build · Source available</p>
+        <h1>Make scrolling cost&nbsp;something.</h1>
+        <p class="sub">ScrollTax blocks your social apps. When you really want in, you pay a small toll for 15 minutes. Then the block comes back by itself.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="https://github.com/abozaralizadeh/ScrollTax">View on GitHub</a>
+          <a class="btn btn-ghost" href="#install">Install</a>
+        </div>
+        <p class="fine">Not in the App Store yet. The demo is the real app in the iOS Simulator, in demo mode: nothing is really blocked and no money moves.</p>
+      </div>
+
+      <div class="hero-stage">
+        <div class="lane-marks" aria-hidden="true"></div>
+        <figure class="phone phone-hero">
+          <div class="screen">
+            <video id="demo" muted loop playsinline preload="none" width="588" height="1280"
+              poster="img/1-welcome.avif" data-src="demo.mp4"
+              aria-label="Screen recording of the ScrollTax app: the deal, signing up, blocked, paying, the countdown, the payment history, settings and deleting the account"></video>
+          </div>
+          <figcaption class="sr-only">A recording of the real app running in the iOS Simulator in demo mode.</figcaption>
+        </figure>
+        <p class="sticker" aria-hidden="true">Real app<br>Demo mode</p>
+        <div class="barrier" aria-hidden="true"><span class="post"></span><span class="arm"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The toll, as a toy -->
+  <section class="section toll-section" aria-labelledby="toll-title">
+    <div class="wrap">
+      <div class="toll reveal" id="toll" data-state="closed">
+        <div class="toll-head">
+          <div>
+            <h2 id="toll-title">Try the toll</h2>
+            <p>A toy version of the deal. Your feed is stuck behind the barrier. Pay the pretend toll and it flows for 15 seconds (the real thing gives you 15 minutes).</p>
+          </div>
+          <div class="toll-status" aria-live="polite">
+            <span class="pill" id="toll-pill">Blocked</span>
+            <span class="count" id="toll-count">0 of 4 unlocks used today</span>
+          </div>
+        </div>
+
+        <div class="road" aria-hidden="true">
+          <div class="feed">
+            <div class="feed-track">
+              <span class="post-card"><i></i><b></b><b></b></span><span class="post-card tall"><i></i><b></b><b></b><b></b></span><span class="post-card"><i></i><b></b></span><span class="post-card"><i></i><b></b><b></b></span><span class="post-card tall"><i></i><b></b><b></b></span><span class="post-card"><i></i><b></b><b></b></span><span class="post-card"><i></i><b></b><b></b></span><span class="post-card tall"><i></i><b></b><b></b><b></b></span><span class="post-card"><i></i><b></b></span><span class="post-card"><i></i><b></b><b></b></span><span class="post-card tall"><i></i><b></b><b></b></span><span class="post-card"><i></i><b></b><b></b></span>
+            </div>
+          </div>
+          <div class="gate">
+            <span class="gate-post"></span>
+            <span class="gate-arm"></span>
+          </div>
+          <span class="road-label">Paid traffic only</span>
+          <svg class="ring" viewBox="0 0 44 44"><circle class="ring-bg" cx="22" cy="22" r="19"/><circle class="ring-fg" id="ring-fg" cx="22" cy="22" r="19"/></svg>
+        </div>
+
+        <div class="toll-foot">
+          <button class="btn btn-primary" id="pay" type="button">Pay the pretend toll · 0.99</button>
+          <span class="timer" id="toll-timer" aria-hidden="true">0:15</span>
+          <button class="link-btn" id="reset" type="button" hidden>Reset the demo</button>
+          <span class="fine">Nothing is charged. This runs in your browser.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="section" id="how" aria-labelledby="how-title">
+    <div class="wrap">
+      <header class="section-head reveal">
+        <p class="eyebrow">How it works</p>
+        <h2 id="how-title">Three steps, and one of them is free.</h2>
+      </header>
+      <ol class="steps">
+        <li class="step reveal">
+          <figure class="phone phone-small"><div class="screen"><picture><source srcset="img/4-picker.avif" type="image/avif"><img src="img/4-picker.png" width="600" height="1304" alt="The screen where you choose which apps and sites to block" loading="lazy" decoding="async"></picture></div></figure>
+          <div><span class="num">1</span><h3>Pick what to block</h3><p>You choose your social apps with Apple's own picker. Apple hands us private tokens, so we never learn which apps they are.</p></div>
+        </li>
+        <li class="step reveal">
+          <figure class="phone phone-small"><div class="screen"><picture><source srcset="img/5-blocked.avif" type="image/avif"><img src="img/5-blocked.png" width="600" height="1304" alt="The home screen saying your social media is blocked, with an unlock button and 4 of 4 unlocks left today" loading="lazy" decoding="async"></picture></div></figure>
+          <div><span class="num">2</span><h3>Blocked, all day</h3><p>Open one of them and you hit the block. No streaks, no guilt messages, no fake countdowns. It's just closed.</p></div>
+        </li>
+        <li class="step reveal">
+          <figure class="phone phone-small"><div class="screen"><picture><source srcset="img/7-unlocked.avif" type="image/avif"><img src="img/7-unlocked.png" width="600" height="1304" alt="The unlocked screen with a 14:50 countdown until the block comes back" loading="lazy" decoding="async"></picture></div></figure>
+          <div><span class="num">3</span><h3>Pay, get 15 minutes</h3><p>Pay the toll through Apple and everything opens for 15 minutes. When the time's up, the block comes back on its own, even with the app closed.</p></div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section" id="features" aria-labelledby="features-title">
+    <div class="wrap">
+      <header class="section-head reveal">
+        <p class="eyebrow">What's in it</p>
+        <h2 id="features-title">Built to be fair to the person paying.</h2>
+      </header>
+      <div class="features">
+        <article class="card reveal">
+          <svg class="ico" viewBox="0 0 40 40" aria-hidden="true"><path d="M8 6h16v28H8z"/><path d="M24 20h12M31 15l5 5-5 5"/><circle cx="19" cy="20" r="1.4" class="fill"/></svg>
+          <h3>Leaving is free</h3>
+          <p>Ask to leave and the block comes off after a 24 hour wait. Or delete your account and it's gone straight away.</p>
+        </article>
+        <article class="card reveal">
+          <svg class="ico" viewBox="0 0 40 40" aria-hidden="true"><path d="M9 8v24M16 8v24M23 8v24M30 8v24"/><path d="M5 26 34 13" class="accent"/></svg>
+          <h3>A daily limit</h3>
+          <p>Four unlocks a day by default. After that the button stops working until midnight, so it can't turn into a money pit.</p>
+        </article>
+        <article class="card reveal">
+          <svg class="ico" viewBox="0 0 40 40" aria-hidden="true"><rect x="11" y="4" width="18" height="32" rx="4"/><path d="M17 31h6"/><path d="M3 10l34 20" class="accent"/></svg>
+          <h3>Works offline</h3>
+          <p>The phone runs the rules. If the server is down or you have no signal, the block holds and a paid unlock still unlocks.</p>
+        </article>
+        <article class="card reveal">
+          <svg class="ico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="21" r="14"/><path d="M20 12v9l6 4"/><path d="M14 3h12" class="accent"/></svg>
+          <h3>Moving the clock won't help</h3>
+          <p>The 15 minutes run on the phone's uptime clock, not the date in Settings. Wind the date back and the timer doesn't care.</p>
+        </article>
+        <article class="card reveal">
+          <svg class="ico" viewBox="0 0 40 40" aria-hidden="true"><path d="M3 20s6-10 17-10 17 10 17 10-6 10-17 10S3 20 3 20z"/><circle cx="20" cy="20" r="4.5"/><path d="M6 34 34 6" class="accent"/></svg>
+          <h3>Nothing about your habits</h3>
+          <p>No list of your apps, no usage stats, no reason for joining. The backend keeps an account and the payments, and that's it.</p>
+        </article>
+        <article class="card reveal">
+          <svg class="ico" viewBox="0 0 40 40" aria-hidden="true"><path d="M10 4h14l6 6v26H10z"/><path d="M24 4v6h6"/><path d="M20 15v12M15 22l5 5 5-5" class="accent"/></svg>
+          <h3>Your data, your copy</h3>
+          <p>Download everything held about you as a file, from Settings. Delete it all in one tap. Payment records lose their link to you.</p>
+        </article>
+      </div>
+
+      <div class="duo reveal">
+        <div class="duo-copy">
+          <h3>The price, before every payment</h3>
+          <p>You see exactly what you're paying and what you get, every single time. Afterwards it's all in your history, refunds included.</p>
+          <p class="fine">The price, the minutes, the daily limit and the leave wait are settings, so anyone running their own copy can change them.</p>
+        </div>
+        <figure class="phone phone-small tilt-l"><div class="screen"><picture><source srcset="img/6-confirm.avif" type="image/avif"><img src="img/6-confirm.png" width="600" height="1304" alt="The confirm screen showing 0.99 for 15 minutes before paying" loading="lazy" decoding="async"></picture></div></figure>
+        <figure class="phone phone-small tilt-r"><div class="screen"><picture><source srcset="img/8-history.avif" type="image/avif"><img src="img/8-history.png" width="600" height="1304" alt="The payments history with one 0.99 payment" loading="lazy" decoding="async"></picture></div></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- Install -->
+  <section class="section" id="install" aria-labelledby="install-title">
+    <div class="wrap">
+      <header class="section-head reveal">
+        <p class="eyebrow">Install</p>
+        <h2 id="install-title">Run it on your Mac in a few minutes.</h2>
+        <p class="lede">You need Node 24 or newer. For the app you also need Xcode and <a href="https://github.com/yonaskolb/XcodeGen">XcodeGen</a>. Everything runs in fake Apple mode, so nothing paid is ever called.</p>
+      </header>
+      <div class="install">
+        <div class="code-card reveal">
+          <div class="code-head"><span>1. Start the backend</span><button class="copy" type="button" data-copy="c1">Copy</button></div>
+<pre id="c1"><code>git clone https://github.com/abozaralizadeh/ScrollTax.git
+cd ScrollTax/backend
 npm install
 cp .env.example .env
-# put a long random string in SESSION_SECRET (openssl rand -hex 32)
+# put a long random string in SESSION_SECRET:
+#   openssl rand -hex 32
 npm run dev</code></pre>
-  <p>It starts in fake Apple mode on <code>http://127.0.0.1:8787</code>. Nothing paid is ever called.</p>
-  <p>iPhone app, in the simulator (demo mode, with a pretend blocker and a pretend purchase):</p>
-<pre><code>cd ios
+        </div>
+        <div class="code-card reveal">
+          <div class="code-head"><span>2. Open the app</span><button class="copy" type="button" data-copy="c2">Copy</button></div>
+<pre id="c2"><code>cd ScrollTax/ios
 xcodegen generate
-open ScrollTax.xcodeproj</code></pre>
-  <p>Run the tests:</p>
-<pre><code>cd backend &amp;&amp; npm test
-cd ios/Packages/ScrollTaxCore &amp;&amp; swift test</code></pre>
-  <p>For a Debian or Ubuntu server, run <code>sudo ./setup_service.sh</code>. It installs everything the first time, and updates and restarts on every run after that.</p>
+open ScrollTax.xcodeproj
+# run it in the simulator: demo mode
+# starts on its own</code></pre>
+        </div>
+        <div class="code-card reveal">
+          <div class="code-head"><span>3. Run the tests</span><button class="copy" type="button" data-copy="c3">Copy</button></div>
+<pre id="c3"><code>cd ScrollTax/backend && npm test
+cd ../ios/Packages/ScrollTaxCore && swift test</code></pre>
+        </div>
+      </div>
+      <p class="fine center reveal">Putting the backend on a Debian or Ubuntu server? <code>sudo ./setup_service.sh</code> installs it the first time and updates it after. The README has the rest.</p>
+    </div>
+  </section>
 
-  <h2>What's missing</h2>
-  <ul>
-    <li>Real blocking needs Apple's Family Controls approval and a real iPhone.</li>
-    <li>Real Sign in with Apple and App Store purchases are written but have only been tested against locally made keys.</li>
-    <li>There's no web demo. The product is an iPhone app, and Screen Time can't run in a browser.</li>
-  </ul>
+  <!-- FAQ -->
+  <section class="section" id="faq" aria-labelledby="faq-title">
+    <div class="wrap narrow">
+      <header class="section-head reveal">
+        <p class="eyebrow">Straight answers</p>
+        <h2 id="faq-title">What it is, and what it isn't.</h2>
+      </header>
+      <div class="faq reveal">
+        <details>
+          <summary>Can I get it from the App Store?</summary>
+          <p>Not yet. Real blocking needs Apple's Family Controls approval, and that part hasn't run on a real iPhone. Right now it runs in the Simulator in demo mode.</p>
+        </details>
+        <details>
+          <summary>Is there a web demo?</summary>
+          <p>No. Screen Time only exists on the phone, so a browser version would be fake. The video at the top is the real app. The toll above is just a toy to show the idea.</p>
+        </details>
+        <details>
+          <summary>Can't I just switch it off?</summary>
+          <p>Yes. You can remove the Screen Time permission or delete the app. It only works for people who want it to, and it doesn't punish anyone for walking away.</p>
+        </details>
+        <details>
+          <summary>Where does the money go?</summary>
+          <p>Nowhere for now. Payments only run in Apple's sandbox or test mode. The price shown is the default setting.</p>
+        </details>
+        <details>
+          <summary>Is this a treatment?</summary>
+          <p>No. It's a tool, not a medical product. If social media is hurting your life, a doctor or counsellor can help.</p>
+        </details>
+        <details>
+          <summary>Can I use the code?</summary>
+          <p>Yes, for anything non-commercial. It's source available under the PolyForm Noncommercial License 1.0.0. For commercial use, ask first by opening an issue.</p>
+        </details>
+      </div>
+    </div>
+  </section>
 
-  <footer>License: to be decided. ScrollTax is not a medical product or a treatment.</footer>
 </main>
+
+<footer class="foot">
+  <div class="foot-barrier" aria-hidden="true"></div>
+  <div class="wrap foot-grid">
+    <div>
+      <a class="brand" href="#top"><svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="6" width="5" height="22" rx="1.5" fill="currentColor"/><rect x="6" y="11" width="24" height="6" rx="1.5" fill="var(--accent)"/><path d="M11 11h4l-3 6H8zM19 11h4l-3 6h-4zM27 11h3v1.5L27.8 17h-3.8z" fill="var(--ink-on-accent)"/></svg><span>ScrollTax</span></a>
+      <p class="fine">Working name. Not a medical product or a treatment.</p>
+    </div>
+    <div class="foot-links">
+      <a href="https://github.com/abozaralizadeh/ScrollTax">Code on GitHub</a>
+      <a href="https://github.com/abozaralizadeh/ScrollTax/issues">Issues</a>
+      <a href="https://github.com/abozaralizadeh/ScrollTax/blob/main/LICENSE">License</a>
+    </div>
+    <div class="foot-legal">
+      <p>Source available, free for non-commercial use (<a href="https://github.com/abozaralizadeh/ScrollTax/blob/main/LICENSE">PolyForm Noncommercial 1.0.0</a>). Commercial use needs written permission, asked through a <a href="https://github.com/abozaralizadeh/ScrollTax/issues">GitHub issue</a>.</p>
+      <p>Made by <a href="https://abozaralizadeh.github.io">Abozar Alizadeh</a>.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js" defer></script>
 </body>
 </html>

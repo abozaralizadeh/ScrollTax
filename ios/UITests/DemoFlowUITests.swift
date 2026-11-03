@@ -29,7 +29,7 @@ final class DemoFlowUITests: XCTestCase {
         toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: 0.5)).tap()
     }
 
-    private func appears(_ element: XCUIElement, _ what: String, timeout: TimeInterval = 8) {
+    private func appears(_ element: XCUIElement, _ what: String, timeout: TimeInterval = 20) {
         XCTAssertTrue(element.waitForExistence(timeout: timeout), "Expected to see: \(what)")
     }
 

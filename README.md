@@ -1,5 +1,13 @@
 # ScrollTax (working name)
 
+![A walk through the ScrollTax app in the iOS Simulator, in demo mode](site/demo.gif)
+
+*The real app running in the iOS Simulator in demo mode (pretend blocker, pretend purchase, local test backend). No real money, no real blocking.*
+
+Site: https://abozaralizadeh.github.io/ScrollTax/
+
+Source available, free for non-commercial use ([PolyForm Noncommercial 1.0.0](LICENSE)). Commercial use needs written permission. Ask by opening an issue.
+
 A phone app for people who want less social media. You sign up, your social media gets blocked, and to open it you pay a small amount for a short window of time. When the time is up, the block comes back.
 
 It's an early project. It isn't released, it takes no real money, and some parts have never run on a real iPhone (see "What works" below).
@@ -83,8 +91,10 @@ If you build this yourself, swap these for your own: the bundle IDs `app.scrollt
 
 ## Contributing
 
-Issues and pull requests are welcome once the project is public. Please keep changes small, run the tests above first, and keep the existing rules: backend TypeScript stays "erasable" (no enums, `import type`, `.ts` in import paths), every Apple dependency stays behind its interface with a fake, and payments stay in test mode. Don't describe the app as a treatment or cure for anything.
+Issues and pull requests are welcome. Please keep changes small, run the tests above first, and read [CONTRIBUTING.md](CONTRIBUTING.md). Contributions are accepted only if you agree that the author may relicense them, commercially too.
 
 ## License
 
-To be decided.
+Source available, free for non-commercial use, under the [PolyForm Noncommercial License 1.0.0](LICENSE). That means you can read, run, study and change it for non-commercial purposes. It is not "open source" in the strict sense, because commercial use isn't allowed without written permission. To ask for permission, open an issue on this repo.
+
+Third-party packages keep their own licenses, see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
