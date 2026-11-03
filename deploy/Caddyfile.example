@@ -1,0 +1,6 @@
+# Copy to /etc/caddy/Caddyfile and put your real domain in place of api.example.com.
+# Caddy gets and renews the HTTPS certificate on its own.
+api.example.com {
+	encode gzip
+	reverse_proxy 127.0.0.1:8787
+}

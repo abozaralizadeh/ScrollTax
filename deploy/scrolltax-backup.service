@@ -1,0 +1,9 @@
+[Unit]
+Description=ScrollTax nightly database backup
+
+[Service]
+Type=oneshot
+User=scrolltax
+Group=scrolltax
+WorkingDirectory=/opt/scrolltax/backend
+ExecStart=/usr/bin/node --no-warnings --env-file=/opt/scrolltax/backend/.env scripts/backup.ts

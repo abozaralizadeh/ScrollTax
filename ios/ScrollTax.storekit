@@ -1,0 +1,20 @@
+{
+  "identifier" : "C0FFEE01",
+  "nonRenewingSubscriptions" : [],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "C0FFEE02",
+      "localizations" : [
+        { "description" : "Unlock your blocked apps for 15 minutes", "displayName" : "15 minute unlock", "locale" : "en_US" }
+      ],
+      "productID" : "app.scrolltax.unlock15",
+      "referenceName" : "15 minute unlock",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {},
+  "subscriptionGroups" : [],
+  "version" : { "major" : 3, "minor" : 0 }
+}

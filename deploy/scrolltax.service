@@ -1,0 +1,20 @@
+[Unit]
+Description=ScrollTax backend
+After=network.target
+
+[Service]
+User=scrolltax
+Group=scrolltax
+WorkingDirectory=/opt/scrolltax/backend
+EnvironmentFile=/opt/scrolltax/backend/.env
+ExecStart=/usr/bin/node --no-warnings src/server.ts
+Restart=always
+RestartSec=3
+NoNewPrivileges=true
+ProtectSystem=full
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/opt/scrolltax/backend/data /opt/scrolltax/backend/logs
+
+[Install]
+WantedBy=multi-user.target

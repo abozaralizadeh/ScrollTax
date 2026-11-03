@@ -1,0 +1,61 @@
+node_modules/
+.env
+backend/data/
+backend/logs/
+.build/
+.swiftpm/
+DerivedData/
+*.xcuserstate
+xcuserdata/
+.DS_Store
+# Made by "xcodegen generate" from ios/project.yml
+ios/ScrollTax.xcodeproj/
+ios/App/Info.plist
+ios/App/*.entitlements
+ios/ShieldConfig/Info.plist
+ios/ShieldConfig/*.entitlements
+ios/ShieldAction/Info.plist
+ios/ShieldAction/*.entitlements
+ios/Monitor/Info.plist
+ios/Monitor/*.entitlements
+
+# Secrets and real config (the example stays)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p8
+*.p12
+*.cer
+*.csr
+*.srl
+
+# Logs, databases, volumes
+logs/
+*.log
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+data/
+volumes/
+
+# Dependencies and build output
+.venv/
+target/
+dist/
+build/
+.next/
+
+# Models and large binaries
+*.gguf
+*.safetensors
+*.onnx
+*.mlmodel
+*.zip
+*.tar.gz
+
+# Local tooling
+.DS_Store

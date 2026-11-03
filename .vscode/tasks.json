@@ -1,0 +1,42 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Backend: install",
+      "type": "shell",
+      "command": "npm install",
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Backend: test",
+      "type": "shell",
+      "command": "npm test",
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Backend: typecheck",
+      "type": "shell",
+      "command": "npm run typecheck",
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "iOS: core tests",
+      "type": "shell",
+      "command": "swift test",
+      "options": { "cwd": "${workspaceFolder}/ios/Packages/ScrollTaxCore" },
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "iOS: make the Xcode project",
+      "type": "shell",
+      "command": "xcodegen generate",
+      "options": { "cwd": "${workspaceFolder}/ios" },
+      "problemMatcher": []
+    }
+  ]
+}
